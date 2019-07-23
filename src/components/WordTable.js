@@ -1,8 +1,18 @@
 import React, {Component} from 'react'
+import WordTableRow from './WordTableRow';
 
 class WordTable extends Component {
 
-    render() {
+     render() {
+
+        const wordRowComponents = this.props.words.map(wordData => {
+            return (
+                <WordTableRow 
+                word = {wordData}/>
+            )
+        })
+
+
         return (
             <table className="word-table">
                 <thead>
@@ -12,6 +22,7 @@ class WordTable extends Component {
                     </tr>
                 </thead>
                 <tbody>
+                    {wordRowComponents}
                 </tbody>
 
 

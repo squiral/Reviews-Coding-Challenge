@@ -19,8 +19,9 @@ class ReviewsContainer extends Component {
       const cleanSingleString = this.cleanSingleString(singleString)
       const arrayOfWords = this.splitStringIntoWords(cleanSingleString)
       const uncommonWords = this.removeCommonWords(arrayOfWords)
-      const words = this.wordsByFrequency(uncommonWords)
-      this.setState({words}
+      const wordObject = this.wordsByFrequency(uncommonWords)
+      const seperateWordObjects = this.seperateWordObjects(wordObject)
+      this.setState({seperateWordObjects}
       )
     })
   }
@@ -85,11 +86,32 @@ class ReviewsContainer extends Component {
 
   }
 
+  seperateWordObjects(wordObject) {
+    const words = Object.keys(wordObject)
+    const arrayOfWordObjects = []
+
+    for (const word of words) {
+      const individualWordObject = 
+        {
+          text: word,
+          value: wordObject[word]
+        }
+      
+      arrayOfWordObjects.push(individualWordObject)
+      
+    }
+
+    return arrayOfWordObjects
+
+  }
+
+  
+
 
   render() {
     console.log("this.state:", this.state)
     return(
-      <WordTable />
+      <h1>Hello!</h1>
     )
   }
 }
