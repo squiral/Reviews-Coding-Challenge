@@ -112,9 +112,13 @@ class ReviewsContainer extends Component {
 
   render() {
     console.log("this.state:", this.state)
+    const fontSizeMapper = word => Math.log2(word.value) * 50;
     return(
       // <h1>Hello World!</h1>
-      <WordCloud data={this.state.words} />
+      <WordCloud 
+      data={this.state.words}
+      fontSizeMapper={fontSizeMapper}
+       />
     )
   }
 }
