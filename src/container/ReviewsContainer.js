@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
+import WordCloud from 'react-d3-cloud'
 import WordTable from '../components/WordTable'
 
 class ReviewsContainer extends Component {
 
   constructor(props){
     super(props)
-    this.state = {}
+    this.state = {
+      words: []
+    }
 
   }
 
@@ -20,9 +23,8 @@ class ReviewsContainer extends Component {
       const arrayOfWords = this.splitStringIntoWords(cleanSingleString)
       const uncommonWords = this.removeCommonWords(arrayOfWords)
       const wordObject = this.wordsByFrequency(uncommonWords)
-      const seperateWordObjects = this.seperateWordObjects(wordObject)
-      this.setState({seperateWordObjects}
-      )
+      const words = this.seperateWordObjects(wordObject)
+      this.setState({words})
     })
   }
 
@@ -111,7 +113,8 @@ class ReviewsContainer extends Component {
   render() {
     console.log("this.state:", this.state)
     return(
-      <h1>Hello!</h1>
+      // <h1>Hello World!</h1>
+      <WordCloud data={this.state.words} />
     )
   }
 }
