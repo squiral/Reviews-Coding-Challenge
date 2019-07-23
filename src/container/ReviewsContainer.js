@@ -15,7 +15,8 @@ class ReviewsContainer extends Component {
     .then((data) => { 
       const arrayOfStrings = this.flattenReviewsIntoSingleArray(data.reviews)
       const singleString = this.reduceIntoSingleString(arrayOfStrings)
-      this.setState({singleString}
+      const cleanSingleString = this.cleanReviewString(singleString)
+      this.setState({cleanSingleString}
       )
     })
   }
@@ -36,8 +37,11 @@ class ReviewsContainer extends Component {
     return singleString
   }
 
-  cleanReviewStrings(reviews) {
-    return reviews.replace( /[^a-zA-Z0-9]/ , "")
+  cleanReviewString(string) {
+
+    const cleanString = string.replace(/[^A-Za-z0-9]/g, ' ')
+    .toLowerCase()
+    return cleanString
   }
 
 
