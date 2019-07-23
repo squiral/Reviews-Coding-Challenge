@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import WordTable from '../components/WordTable'
 
 class ReviewsContainer extends Component {
 
@@ -14,9 +15,12 @@ class ReviewsContainer extends Component {
     .then(res => res.json())
     .then((data) => { 
       const arrayOfStrings = this.flattenReviewsIntoSingleArray(data.reviews)
-      const singleString = this.reduceIntoSingleString(arrayOfStrings)
-      const cleanSingleString = this.cleanReviewString(singleString)
-      this.setState({cleanSingleString}
+      const singleString = this.reduceArrayIntoSingleString(arrayOfStrings)
+      const cleanSingleString = this.cleanSingleString(singleString)
+      const arrayOfWords = this.splitStringIntoWords(cleanSingleString)
+      const uncommonWords = this.removeCommonWords(arrayOfWords)
+      const words = this.wordsByFrequency(uncommonWords)
+      this.setState({words}
       )
     })
   }
@@ -31,24 +35,61 @@ class ReviewsContainer extends Component {
 
   }
 
-  reduceIntoSingleString (arrayOfStrings) {
+  reduceArrayIntoSingleString (arrayOfStrings) {
     const singleString = arrayOfStrings.join(' ')
 
     return singleString
   }
 
-  cleanReviewString(string) {
+  cleanSingleString(string) {
+    const cleanString = string
+      .replace(/[^A-Za-z]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .toLowerCase()
 
-    const cleanString = string.replace(/[^A-Za-z0-9]/g, ' ')
-    .toLowerCase()
     return cleanString
+  }
+
+  splitStringIntoWords(string) {
+    const words = string.split(' ')
+
+    return words
+  }
+
+  removeCommonWords(words) {
+    const commonWords = ["on", "was", "my", "did", "that", "the", "this", "if", "is", "a", "it", "and", "as", "but", "do", "does", "s", "i", "so", "to", "will", "you"]
+    const uncommonWords = []
+
+    for (const word of words) {
+      if (!commonWords.includes(word)) {
+        uncommonWords.push(word)
+      }
+    }
+
+    return uncommonWords
+  }
+
+  wordsByFrequency(words) {
+    const wordsByFrequency = {};
+
+    for (const word of words) {
+      if (wordsByFrequency[word]) {
+        wordsByFrequency[word] += 1;
+      }
+      else {
+            wordsByFrequency[word] = 1;
+          }
+    }
+
+    return wordsByFrequency
+
   }
 
 
   render() {
-    console.log(this.state)
+    console.log("this.state:", this.state)
     return(
-      <h1>Hello World!</h1>
+      <WordTable />
     )
   }
 }
