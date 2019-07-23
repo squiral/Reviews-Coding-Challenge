@@ -12,8 +12,18 @@ class ReviewsContainer extends Component {
     const url = "https://raw.githubusercontent.com/Jordanddick/ef-coding-challenge/master/reviews.json"
     fetch(url)
     .then(res => res.json())
-    .then((data) => { this.setState({reviews: data})
+    .then((data) => { 
+      const arrayOfWords = this.splitIntoWords(data.reviews)
+      this.setState({arrayOfWords}
+      )
     })
+  }
+
+
+  splitIntoWords(reviews) {
+    const totalArrayOfWords = []
+    const array = reviews.map(review => review.split(" "))
+    console.log(array)
   }
 
 
