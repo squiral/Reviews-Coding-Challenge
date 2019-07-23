@@ -13,18 +13,32 @@ class ReviewsContainer extends Component {
     fetch(url)
     .then(res => res.json())
     .then((data) => { 
-      const arrayOfWords = this.splitIntoWords(data.reviews)
+      const arrayOfWords = this.flattenReviewsIntoSingleArray(data.reviews)
       this.setState({arrayOfWords}
       )
     })
   }
 
 
-  splitIntoWords(reviews) {
-    const totalArrayOfWords = []
-    const array = reviews.map(review => review.split(" "))
-    console.log(array)
+  flattenReviewsIntoSingleArray (reviews) {
+    const singleArray = reviews.reduce( function(accumulator, currentValue) {
+      return accumulator.concat(currentValue);
+    },
+    []
+    )
+
+    return singleArray
+
   }
+
+
+  // splitIntoWords(reviews) {
+  //   const totalArrayOfWords = []
+  //   const array = reviews.map(review => {
+  //     review.split(" ")}
+  //     totalArrayOfWords.push(array)
+  //     )
+  // }
 
 
   render() {
