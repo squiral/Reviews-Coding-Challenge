@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import WordCloud from 'react-d3-cloud'
-// import WordTable from '../components/WordTable'
+
+import WordTable from '../components/WordTable'
 
 class ReviewsContainer extends Component {
   constructor(props){
@@ -11,8 +12,7 @@ class ReviewsContainer extends Component {
 
   }
 
-  componentDidMount() {
-      
+  componentDidMount() {     
     const data = require('../reviews.json')
     // console.log("Start of componentDidMount", data)
     const singleString = this.reduceArrayIntoSingleString(data.reviews)
@@ -22,25 +22,16 @@ class ReviewsContainer extends Component {
     const wordObject = this.wordsByFrequency(uncommonWords)
     const words = this.seperateWordObjects(wordObject)
     this.setState({words})
+    console.log("end of componentDidMount", this.state.words)
       
   }
   
-
-
-
-
-  flattenReviewsIntoSingleArray (reviewArrays) {
-    const singleArray = reviewArrays.reduce( function(accumulator, currentValue) {
-      return accumulator.concat(currentValue);
-    }, [] )
-
-    return singleArray
-  }
 
   reduceArrayIntoSingleString (arrayOfStrings) {
     const singleString = arrayOfStrings.join(' ')
 
     return singleString
+
   }
 
   cleanSingleString(string) {
@@ -50,25 +41,30 @@ class ReviewsContainer extends Component {
       .toLowerCase()
 
     return cleanString
+
   }
 
   splitStringIntoWords(string) {
     const words = string.split(' ')
 
     return words
+
   }
 
   removeCommonWords(words) {
-    const commonWords = ["on", "was", "my", "did", "that", "the", "this", "if", "is", "a", "it", "and", "as", "but", "do", "does", "s", "i", "so", "to", "will", "you"]
+    const stopWords = require('../stopwords.js')
     const uncommonWords = []
 
+    console.log(stopWords)
+
     for (const word of words) {
-      if (!commonWords.includes(word)) {
+      if (!stopWords.default.includes(word)) {
         uncommonWords.push(word)
       }
     }
 
     return uncommonWords
+
   }
 
   wordsByFrequency(words) {
@@ -110,11 +106,11 @@ class ReviewsContainer extends Component {
 
 
   render() {
-    console.log("this.state:", this.state)
+    console.log("this.state.words:", this.state.words)
     const fontSizeMapper = word => Math.log2(word.value) * 50;
     return(
       <Fragment>
-        {/* <WordTable words={this.state.words} /> */}
+        <WordTable words={this.state.words} />
         <WordCloud data={this.state.words} fontSizeMapper={fontSizeMapper}/>
       </Fragment>
     )

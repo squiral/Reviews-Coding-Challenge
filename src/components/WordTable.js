@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import WordTableRow from './WordTableRow'
 
 
@@ -6,24 +6,17 @@ class WordTable extends Component {
 
 
     render() {
-
-            const rowComponents = this.props.words.map(word, index => {
-                return (
-                    <WordTableRow 
-                    id={index}
-                    word={wordData.text}
-                    frequency={wordData.value}/>
-                )
-            })
-
-
+        console.log("this.props.words", this.props.words.length)
+        const words = this.props.words.map((word) => {
             return (
-                <Fragment>
-                    <ul>
-                        {rowComponents}
-                    </ul>
-                </Fragment>
+                <WordTableRow 
+                text = {word.text}
+                />
             )
+        })
+
+        return words
+        
         }
     
 
