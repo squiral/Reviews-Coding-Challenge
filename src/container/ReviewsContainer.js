@@ -1,9 +1,8 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import WordCloud from 'react-d3-cloud'
-import WordTable from '../components/WordTable'
+// import WordTable from '../components/WordTable'
 
 class ReviewsContainer extends Component {
-
   constructor(props){
     super(props)
     this.state = {
@@ -13,20 +12,21 @@ class ReviewsContainer extends Component {
   }
 
   componentDidMount() {
-    const url = "https://raw.githubusercontent.com/Jordanddick/ef-coding-challenge/master/reviews.json"
-    fetch(url)
-    .then(res => res.json())
-    .then((data) => { 
-      const arrayOfStrings = this.flattenReviewsIntoSingleArray(data.reviews)
-      const singleString = this.reduceArrayIntoSingleString(arrayOfStrings)
-      const cleanSingleString = this.cleanSingleString(singleString)
-      const arrayOfWords = this.splitStringIntoWords(cleanSingleString)
-      const uncommonWords = this.removeCommonWords(arrayOfWords)
-      const wordObject = this.wordsByFrequency(uncommonWords)
-      const words = this.seperateWordObjects(wordObject)
-      this.setState({words})
-    })
+      
+    const data = require('../reviews.json')
+    // console.log("Start of componentDidMount", data)
+    const singleString = this.reduceArrayIntoSingleString(data.reviews)
+    const cleanSingleString = this.cleanSingleString(singleString)
+    const arrayOfWords = this.splitStringIntoWords(cleanSingleString)
+    const uncommonWords = this.removeCommonWords(arrayOfWords)
+    const wordObject = this.wordsByFrequency(uncommonWords)
+    const words = this.seperateWordObjects(wordObject)
+    this.setState({words})
+      
   }
+  
+
+
 
 
   flattenReviewsIntoSingleArray (reviewArrays) {
@@ -35,7 +35,6 @@ class ReviewsContainer extends Component {
     }, [] )
 
     return singleArray
-
   }
 
   reduceArrayIntoSingleString (arrayOfStrings) {
@@ -114,11 +113,10 @@ class ReviewsContainer extends Component {
     console.log("this.state:", this.state)
     const fontSizeMapper = word => Math.log2(word.value) * 50;
     return(
-      // <h1>Hello World!</h1>
-      <WordCloud 
-      data={this.state.words}
-      fontSizeMapper={fontSizeMapper}
-       />
+      <Fragment>
+        {/* <WordTable words={this.state.words} /> */}
+        <WordCloud data={this.state.words} fontSizeMapper={fontSizeMapper}/>
+      </Fragment>
     )
   }
 }
