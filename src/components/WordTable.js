@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import WordTableRow from './WordTableRow'
+import './WordTable.css'
 
 
 class WordTable extends Component {
-
 
     render() {
         console.log("this.props.words", this.props.words.length)
@@ -11,13 +11,26 @@ class WordTable extends Component {
             return (
                 <WordTableRow 
                 text = {word.text}
+                frequency = {word.value}
                 />
             )
         })
 
-        return words
-        
-        }
+        return (
+            <table className = "word-table">
+                <thead>
+                    <tr>
+                        <th>Word</th>
+                        <th>Frequency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {words}
+                </tbody>
+            </table>
+        )
+
+    }
     
 
 }
