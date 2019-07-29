@@ -9,7 +9,6 @@ class ReviewsContainer extends Component {
     this.state = {
       words: []
     }
-
   }
 
   componentDidMount() {    
