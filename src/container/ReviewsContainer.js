@@ -118,7 +118,7 @@ class ReviewsContainer extends Component {
     return(
       <Fragment>
         <WordTable words={this.state.words} />
-        <WordCloud data={this.state.words} fontSizeMapper={fontSizeMapper}/>
+        {/* <WordCloud data={this.state.words} fontSizeMapper={fontSizeMapper}/> */}
       </Fragment>
     )
   }

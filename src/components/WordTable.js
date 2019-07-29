@@ -7,11 +7,12 @@ class WordTable extends Component {
 
     render() {
         console.log("this.props.words", this.props.words.length)
-        const words = this.props.words.map((word) => {
+        const words = this.props.words.map((word, index) => {
             return (
                 <WordTableRow 
                 text = {word.text}
                 frequency = {word.value}
+                key = {index}
                 />
             )
         })
